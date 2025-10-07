@@ -1,4 +1,4 @@
-alder = int(input("Hvilket år er du født? ")) # Spør brukeren om fødselsår i terminal
+alder = int(input("Hvilket år er du født? ")) # Spør om fødselsår i terminal
 
 referanseår = 2024 # Setter referanseår til 2024
 
