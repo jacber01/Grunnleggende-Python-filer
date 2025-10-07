@@ -16,7 +16,7 @@ if land in data:
 
 # -- del c --
 else:
-    svar = input("Landet er ikke i databasen. Vil du legge det til? ja/nei ").strip().lower()  # Spør om brukeren vil legge til landet i terminalen
+    svar = input("Landet er ikke i databasen. Vil du legge det til? ja/nei ").strip().lower()  # Spør om man vil legge til landet i terminalen
     if svar in ("ja", "j", "yes", "y"):
         while True:
             nytt_land = input("Skriv inn et nytt land eller stopp for å avslutte: ").lower().strip() # Spør om et nytt land i terminalen
