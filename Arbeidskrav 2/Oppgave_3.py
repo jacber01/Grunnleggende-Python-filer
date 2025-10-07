@@ -1,6 +1,6 @@
 import numpy as np
 
-v_grad = float(input("Skriv inn gradtallet"))  # Spør brukeren om gradtall i terminal
+v_grad = float(input("Skriv inn gradtallet"))  # Spør om gradtall i terminal
 
 v_rad = v_grad * (np.pi / 180)  # Regner om gradtall til radianer
 
