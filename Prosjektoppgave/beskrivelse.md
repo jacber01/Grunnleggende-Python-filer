@@ -231,11 +231,13 @@ ${HL} {Spread} = \frac{High - Low}{Close} * 100$
 2. Pass på at alle filene ligger i samme mappe 
 3. Kjør `markov_kjede.py` for å kjøre modellen
 
-*Ekstra*  
-5. Kjør data_eksport.py
-6. Pass på at den nye oppdaterte csv-filen ligger i samme mappe som `markov_kjede.py` og kjør den på nytt
+*Ekstra*
+Hvis du vil hente ut og teste modellen på nyeste dataen for Oslo børs gjør følgene:
+4. Kjør data_eksport.py
+5. Pass på at den nye oppdaterte csv-filen ligger i samme mappe som `markov_kjede.py` og kjør den på nytt
 
-Dette kan føre til andre resultater fordi modellen da får en oppdatert sannsynlighet på regimene.
+Dette kan føre til andre resultater fordi modellen får nye tall og trene seg opp på.
+
 ---
 
 *Prosjektoppgave i PY1010, Universitetet i Sørøst-Norge*
