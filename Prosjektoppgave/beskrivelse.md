@@ -222,7 +222,7 @@ $\sigma_{30d} = \text{std}(r_{t-30:t}) \times \sqrt{252}$
 - Hovedindikator for markedsrisiko  
 
 #### 5. High–Low Spread
-$HL\_spread = \frac{High - Low}{Close} \times 100$  
+${HL} {Spread} = \frac{High - Low}{Close} \times 100$  
 - Fanger intradag-spredning i prosent  
 
 ---
