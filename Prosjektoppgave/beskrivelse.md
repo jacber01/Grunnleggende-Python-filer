@@ -17,7 +17,7 @@ Modellen:
 
 ### Intuitivt eksempel
 
-La oss si at en restaurant har et daglig lunsjtilbud som består av **enten** Pizza, Burger eller Taco. Og at du ønsker å finne mønsteret mellom disse tre tilbudene (også kalt "regimene"). Hovedantakalsen i en Markov modell er at sannsynligheten for hva morgendagens lunsjtilbud blir, er kun avhengig av hva lunsjtilbudet var i dag. Dette uttrykkes mattematisk som:
+La oss si at en restaurant har et daglig lunsjtilbud som består av **enten** Pizza, Burger eller Taco. Og at du ønsker å finne mønsteret mellom disse tre tilbudene (også kalt "regimene"). Hovedantakalsen i en Markov modell er at sannsynligheten for hva morgendagens lunsjtilbud blir, er kun avhengig av hva lunsjtilbudet var i dag. Dette uttrykkes matematisk som:
 
 $P(X_{t+1} \mid X_t)$
 
@@ -222,7 +222,7 @@ $\sigma_{30d} = \text{std}(r_{t-30:t}) \times \sqrt{252}$
 - Hovedindikator for markedsrisiko  
 
 #### 5. High–Low Spread
-$HL\_Spread = \frac{High - Low}{Close}$
+$HL\_(Spread) = \frac{High - Low}{Close}$
 - Fanger intradag-usikkerhet  
 
 ---
