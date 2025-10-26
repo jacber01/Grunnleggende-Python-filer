@@ -227,9 +227,15 @@ ${HL} {Spread} = \frac{High - Low}{Close} * 100$
 ---
 
 ## Bruk
-1. `pip install numpy pandas yfinance hmmlearn matplotlib seaborn scikit-learn`  
-2. Kjør `data_export.py` for å exportere og regne ut OSEBX-data  
-3. Kjør `markov_kjede.py` for å kjøre modellen 
+1. Last ned alle filene 
+2. Pass på at alle filene ligger i samme mappe 
+3. Kjør `markov_kjede.py` for å kjøre modellen
+
+*Ekstra*
+Hvis du vil hente ut og teste modellen på nyeste dataen for Oslo børs gjør følgene:
+4. Kjør data_eksport.py
+5. Pass på at den nye oppdaterte csv-filen ligger i samme mappe som `markov_kjede.py` og kjør den på nytt
+Dette kan føre til andre resultater fordi modellen da får en oppdatert sannsynlighet på regimene.
 ---
 
 *Prosjektoppgave i PY1010, Universitetet i Sørøst-Norge*
