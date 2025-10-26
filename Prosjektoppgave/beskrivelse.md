@@ -1,6 +1,6 @@
 # Regimeidentifikasjon på Oslo Børs med Skjult Markov-modell (HMM)
 
-Dette prosjektet bruker en **Skjult Markov-Modell** til å identifisere underliggende markedsregimer på Oslo Børs. Modellen analyserer historiske data og avdekker skjulte regimer som kan brukes til risikostyring og porteføljetilpasning.
+Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underliggende markedsregimer på Oslo Børs. Modellen analyserer historiske data og avdekker skjulte regimer som kan brukes til risikostyring og porteføljetilpasning.
 
 ## Prosjektmål
 
@@ -17,7 +17,7 @@ Modellen:
 
 ### Intuitivt eksempel
 
-La oss si at en restaurant har et daglig lunsjtilbud som består av **enten** Pizza, Burger eller Taco. Og at du ønsker å finne mønsteret mellom disse tre tilbudene (også kalt "regimene"). Hovedantakalsen i en Markov modell er at sannsynligheten for hva morgendagens lunsjtilbud blir, er kun avhengig av hva lunsjtilbudet var i dag. Dette uttrykkes matematisk som:
+La oss si at en restaurant har et daglig lunsjtilbud som består av **enten** Pizza, Burger eller Taco. Og at du ønsker å finne mønsteret mellom disse tre tilbudene (også kalt "regimene"). Hovedantakalsen i en Markov-modell er at sannsynligheten for hva morgendagens lunsjtilbud blir, er kun avhengig av hva lunsjtilbudet var i dag. Dette uttrykkes mattematisk som:
 
 $P(X_{t+1} \mid X_t)$
 
@@ -73,11 +73,11 @@ Der regime med lavest gjennomsnittsvolatilitet klassifiseres som "rolig" og den 
 
 En vanlig Markov-modell antar at vi kan observere regimet direkte. Vi kan da beregne sannsynligheten for overgang fra ett regime til et annet basert på observasjoner av dagens regime.
 
-**Problemet:** I virkeligheten vet vi ikke hvilket regime markedet er i. Vi kan kun observere handlinger som er påvirket av tilstanden (er volatiliteten stor, er volumet stort osv.). Regimene er nemlig skjulte. Dette løses med en skjult Markov-modell.
+**Problemet:** I virkeligheten vet vi ikke hvilket regime markedet er i. Vi kan kun observere handlinger som er påvirket av tilstanden (er volatiliteten stor, er volumet stort osv.). Regimene er nemlig skjulte. Dette løses med en Skjult Markov-modell.
 
 ---
 
-## Hva er en skjult Markov-modell (HMM)?
+## Hva er en Skjult Markov-modell (HMM)?
 
 ### Intuitivt eksempel
 
@@ -101,9 +101,9 @@ Modellen lærer tre typer sannsynligheter:
 2. **Overgangssannsynligheter** – hvordan vi flytter mellom tilstander  
 3. **Emisjons-sannsynligheter** – hvor sannsynlig en observasjon er gitt en tilstand  
 
-Den identifiserer tilstander som “Regime 0” og “Regime 1”, uten å vite hva de betyr. Analytikeren må tolke dem ved å se på dataene:
+Den identifiserer tilstander som “Regime 0” og “Regime 1”, uten å vite hva de betyr. Det er vi må tolke regimene ved å se på dataene:
 - Gjennomsnittlig volatilitet i hver tilstand  
-- Gjennomsnittlig avkastning  
+- Gjennomsnittlig avkastning i hver tilstand 
 - Hvilke perioder i historien de sammenfaller med  
 
 ---
@@ -222,9 +222,8 @@ $\sigma_{30d} = \text{std}(r_{t-30:t}) \times \sqrt{252}$
 - Hovedindikator for markedsrisiko  
 
 #### 5. High–Low Spread
-$HL\Spread = \frac{High - Low}{Close} * 100$
-- Fanger intradag-usikkerhet i prosent
-
+$Hugh-Low Spread = \frac{High - Low}{Close} * 100$
+- Fanger intradag-spredning i prosent 
 ---
 
 ## Bruk
