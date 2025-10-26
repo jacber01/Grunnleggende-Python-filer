@@ -48,12 +48,16 @@ mean_vol_by_state = X_out.groupby("Regime")["realized_volatility_30d"].mean()
 turbulent_regime = mean_vol_by_state.idxmax()
 rolig_regime = mean_vol_by_state.idxmin()
 
+# --- Egendefinert funksjon for å oppfylle oppgavekrav---
+def expected_duration(p_stay): #Returnerer forventet varighet gitt sannsynlighet for å forbli i samme regime.
+    return 1 / (1 - p_stay)
+
 # --- Identifiserte regimer for varighet og overgang ---
 p_turb = P[turbulent_regime, turbulent_regime]
 p_rolig = P[rolig_regime, rolig_regime]
 
-dur_turbulent = 1 / (1 - p_turb)
-dur_rolig = 1 / (1 - p_rolig)
+dur_turbulent = expected_duration(p_turb)
+dur_rolig = expected_duration(p_rolig)
 
 exit_turbulent = 1 - p_turb
 exit_rolig = 1 - p_rolig
@@ -61,6 +65,12 @@ exit_rolig = 1 - p_rolig
 # --- Terminalmeldinger ---
 print(" ") # (legger luft øverst i terminalen)
 print("Skjult Markov Modell – Strukturell regimeanalyse (OSEBX)")
+
+if dur_turbulent > dur_rolig: # if-else løkke for å tilfredsstille oppgavekrav. 
+    print("Turbulent regime varer i snitt lenger enn rolig regime.")
+else:
+    print("Rolig regime varer i snitt lenger enn turbulent regime.")
+
 print("(Basert på ukentlig data)\n")  
 print("Overgangsmatrise (sannsynlighet for å forbli eller skifte):\n")
 print(pd.DataFrame(P, columns=["→Regime0", "→Regime1"], index=["Regime0→", "Regime1→"]))
@@ -74,9 +84,11 @@ print("\nIdentifiserte regimer basert på gjennomsnittlig volatilitet:")
 print(f"• Rolig regime-ID: {rolig_regime}")
 print(f"• Turbulent regime-ID: {turbulent_regime}")
 print("\nGjennomsnittlig volatilitet pr. regime:")
-print(mean_vol_by_state)
 
-# --- Plot: Close-pris og regimer ---
+for regime_id, vol in mean_vol_by_state.items(): # for eller while løkke for å tilfredsstille oppgavekrav.
+    print(f"Regime {regime_id}: Gjennomsnittlig volatilitet = {vol:.4f}")
+
+# --- Plot: Close-kurs og regimer ---
 plt.figure(figsize=(12, 6))
 plt.plot(df.loc[X_out.index, "rebased_close"], color='black', linewidth=1, label="Markedsbevegelse")
 
