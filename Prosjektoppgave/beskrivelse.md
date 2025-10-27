@@ -8,7 +8,7 @@ Koden kan brukes til å svare på spørsmålet: *Hvor eksponert bør en investor
 
 Modellen:
 - Henter og analyserer data fra OSEBX-indeksen fra og med 3 år tilbake til seneste handelsdag
-- Identifiserer automatisk to distinkte markedsregimer basert på fire forskjellige variabler (Volum, Volatilitet, Avkastning og Intradag-spredning)
+- Identifiserer automatisk to distinkte markedsregimer basert på fire forskjellige variabler (Volum, Volatilitet, Avkastning og High/low-spredning)
 - Gir sannsynlighetsbaserte prediksjoner om fremtidige regimeskift
 
 ---
