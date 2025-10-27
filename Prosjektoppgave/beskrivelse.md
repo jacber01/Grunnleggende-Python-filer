@@ -239,7 +239,7 @@ Hvis du vil hente ut og teste modellen på de nyeste dataene for Oslo Børs, gj�
 1. Kjør `data_eksport.py`  
 2. Pass på at den nye, oppdaterte CSV-filen ligger i samme mappe som `markov_kjede.py`, og kjør den på nytt  
 
-Dette kan føre til andre resultater fordi modellen re-trenes på oppdaterte data.
+Dette kan føre til andre resultater fordi modellen trenes på nytt med oppdatert data.
 
 ---
 
