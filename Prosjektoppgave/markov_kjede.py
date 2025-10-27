@@ -80,15 +80,15 @@ for state in reversed(states):
 # --- Graf: Standardisert kursutvikling og state ---
 if show_main_plot:
     plt.figure(figsize=(12, 6))
-    plt.plot(df.loc[X_out.index, "rebased_close"], color='black', linewidth=1, label="Markedsbevegelse")
+    plt.plot(df.loc[X_out.index, "rebased_close"], color="black", linewidth=1, label="Markedsbevegelse")
 
     plt.scatter(X_out.index[X_out["State"] == volatile_state],
                 df.loc[X_out.index[X_out["State"] == volatile_state], "rebased_close"],
-                color='red', s=10, label=f"State {volatile_state} (turbulent)")
+                color="red", s=10, label=f"State {volatile_state} (turbulent)")
 
     plt.scatter(X_out.index[X_out["State"] == calm_state],
                 df.loc[X_out.index[X_out["State"] == calm_state], "rebased_close"],
-                color='green', s=10, label=f"State {calm_state} (rolig)")
+                color="green", s=10, label=f"State {calm_state} (rolig)")
 
     plt.title("OSEBX med HMM-tilstander (ukentlig data)")
     plt.xlabel("Dato")
@@ -97,10 +97,10 @@ if show_main_plot:
     plt.tight_layout()
     plt.show()
 
-# --- Graf: Volatilitetens støy ---
+# --- Graf: Volatilitet og Avkastning ---
 if show_noise_plot:
     plt.figure(figsize=(12, 6))
-    plt.axhline(0, color='black', linewidth=1)  # horisontal linje ved 0 (0 % avkastning)
+    plt.axhline(0, color="black", linewidth=1)  # horisontal linje ved 0 (0 % avkastning)
 
     returns = X_out["log_return"]
     volatility = X_out["realized_volatility_30d"]
@@ -112,18 +112,14 @@ if show_noise_plot:
         color = "red" if X_out["State"].iloc[i] == volatile_state else "green"
         plt.axvspan(x0, x1, color=color, alpha=0.14, zorder=0)
 
-    plt.plot(X_out.index, returns, color='blue', linewidth=0.6, label="Avkastning")
-    plt.plot(X_out.index, volatility, color='orange', linewidth=0.6, label="Volatilitet")
-
-    plt.axhline(0, color='gray', linestyle='--', linewidth=0.8)
-
+    plt.plot(X_out.index, returns, color="blue", linewidth=0.6, label="Avkastning")
+    plt.plot(X_out.index, volatility, color="orange", linewidth=0.6, label="Volatilitet")
+    plt.axhline(0, color="gray", linestyle="--", linewidth=0.8)
     plt.title("OSEBX Avkastning og Volatilitet over tid")
     plt.xlabel("Dato")
     plt.ylabel("Avkastning (%)")
-    ax2 = plt.gca().secondary_yaxis('right', functions=(lambda x: x + X_out['realized_volatility_30d'].mean(), lambda x: x - X_out['realized_volatility_30d'].mean())) # høyre y-akse der 0-linjen treffer samsvarer med gjennomsnittlig volatilitet                                               
-    ax2.set_ylabel(f"Volatilitet (30d) – gj.snitt: {X_out['realized_volatility_30d'].mean():.3f}") # etikett for høyre y-akse
-
-
+    ax2 = plt.gca().secondary_yaxis("right", functions=(lambda x: x + X_out["realized_volatility_30d"].mean(), lambda x: x - X_out["realized_volatility_30d"].mean())) # høyre y-akse der 0-linjen treffer samsvarer med gjennomsnittlig volatilitet                                               
+    ax2.set_ylabel(f"Volatilitet (30d) – gj.snitt: {X_out['realized_volatility_30d'].mean():.3f}")  # etikett for høyre y-akse
     plt.legend()
     plt.tight_layout()
     plt.show()
@@ -136,7 +132,7 @@ print("(Basert på ukentlig data)\n")
 print("Overgangsmatrise (sannsynlighet for å forbli eller skifte):\n")
 print(pd.DataFrame(P, columns=["→ Regime 0", "→ Regime 1"], index=["Regime 0→", "Regime 1→"]))
 
-print("\nForventet varighet (UKER):")
+print("\nForventet varighet pr. regime:")
 print(f"• Rolig regime (Regime: {calm_state}): {dur_calm:.2f} uker")
 print(f"• Turbulent regime (Regime: {volatile_state}): {dur_volatile:.2f} uker")
 
