@@ -1,7 +1,7 @@
 import warnings
 import pandas as pd
 import numpy as np
-import yfinance as yf  # Rettet fra "yginance" til "yfinance"
+import yfinance as yf 
 from datetime import datetime, timedelta
 import os
 
