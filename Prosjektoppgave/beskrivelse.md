@@ -7,7 +7,7 @@ Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underlig
 Koden kan brukes til å svare på spørsmålet: *Hvor eksponert bør en investor være i Oslo Børs akkurat nå?*
 
 Modellen:
-- Henter og analyserer data fra OSEBX-indeksen fra og med 3 år tilbake til siste handelsdag
+- Henter og analyserer data fra OSEBX-indeksen fra og med 3 år tilbake til seneste handelsdag
 - Identifiserer automatisk to distinkte markedsregimer basert på fire forskjellige variabler (Volum, Volatilitet, Avkastning og Intradag-spredning)
 - Gir sannsynlighetsbaserte prediksjoner om fremtidige regimeskift
 
