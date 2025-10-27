@@ -217,7 +217,7 @@ $r_t = \ln\left(\frac{Close_t}{Close_{t-1}}\right)$
 - Måler markedsaktivitet  
 - Normaliseres via z-score  
 
-#### 4. Realized Volatility (30 dager)
+#### 4. Realisert Volatilitet (30 dager)
 $\sigma_{30d} = \text{std}(r_{t-30:t}) \times \sqrt{252}$  
 - Hovedindikator for markedsrisiko  
 
