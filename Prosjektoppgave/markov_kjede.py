@@ -10,8 +10,7 @@ import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore")
 
 # --- Konfig ---
-show_main_plot = True  # om standardiserte kursutviklingen til OSEBX skal vises
-show_noise_plot = True  # om støygrafen skal vises
+show_plot = True  # om Grafen skal vises
 
 # --- Leser inn data fra CSV-filen ---
 base = os.path.dirname(os.path.abspath(__file__))  # finner mappen der python filen ligger
@@ -31,10 +30,10 @@ X_scaled = scaler.fit_transform(X_df.values)
 
 # --- Trener HMM-modellen ---
 model = GaussianHMM(
-    n_components=2,
-    covariance_type="full",
-    n_iter=500,
-    random_state=42
+    n_components=2, # to skjulte tilstander (regimer)
+    covariance_type="full", # full kovariansmatrise
+    n_iter=500, # maks antall iterasjoner under trening
+    random_state=42 # fast tilfeldig startpunkt for reproduserbarhet.
 )
 
 model.fit(X_scaled)
@@ -60,7 +59,7 @@ def expected_duration(p_stay):  # Returnerer forventet varighet gitt sannsynligh
 
 # --- Identifiserte regimer for varighet og overgang ---
 p_volatile = P[volatile_state, volatile_state]
-p_calm = P[calm_state, calm_state]
+p_calm = P[calm_state, calm_state] 
 
 dur_volatile = expected_duration(p_volatile)
 dur_calm = expected_duration(p_calm)
@@ -77,28 +76,8 @@ for state in reversed(states):
     else:
         break
 
-# --- Graf: Standardisert kursutvikling og state ---
-if show_main_plot:
-    plt.figure(figsize=(12, 6))
-    plt.plot(df.loc[X_out.index, "rebased_close"], color="black", linewidth=1, label="Markedsbevegelse")
-
-    plt.scatter(X_out.index[X_out["State"] == volatile_state],
-                df.loc[X_out.index[X_out["State"] == volatile_state], "rebased_close"],
-                color="red", s=10, label=f"State {volatile_state} (turbulent)")
-
-    plt.scatter(X_out.index[X_out["State"] == calm_state],
-                df.loc[X_out.index[X_out["State"] == calm_state], "rebased_close"],
-                color="green", s=10, label=f"State {calm_state} (rolig)")
-
-    plt.title("OSEBX med HMM-tilstander (ukentlig data)")
-    plt.xlabel("Dato")
-    plt.ylabel("Standardisert sluttkurs")
-    plt.legend()
-    plt.tight_layout()
-    plt.show()
-
 # --- Graf: Volatilitet og Avkastning ---
-if show_noise_plot:
+if show_plot:
     plt.figure(figsize=(12, 6))
     plt.axhline(0, color="black", linewidth=1)  # horisontal linje ved 0 (0 % avkastning)
 
