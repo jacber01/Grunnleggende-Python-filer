@@ -9,6 +9,10 @@ import matplotlib.pyplot as plt
 # --- Fjerner støy fra terminalen---
 warnings.filterwarnings("ignore")
 
+# --- Konfig ---
+show_main_plot = True  # om standardiserte kursutviklingen til OSEBX skal vises
+show_noise_plot = True  # om støygrafen skal vises
+
 # --- Leser inn data fra CSV-filen ---
 base = os.path.dirname(os.path.abspath(__file__))  # finner mappen der python filen ligger
 file_path = os.path.join(base, "OSEBX_data.csv")   # lager full sti til CSV-filen
@@ -29,7 +33,7 @@ X_scaled = scaler.fit_transform(X_df.values)
 model = GaussianHMM(
     n_components=2,
     covariance_type="full",
-    n_iter=500, 
+    n_iter=500,
     random_state=42
 )
 
@@ -41,68 +45,114 @@ P = model.transmat_
 # --- Predikerer skjulte tilstander ---
 states = model.predict(X_scaled)
 X_out = X_df.copy()
-X_out["Regime"] = states
+X_out["State"] = states
 
-# --- Beregner gjennomsnittlig volatilitet for å identifisere regimer ---
-mean_vol_by_state = X_out.groupby("Regime")["realized_volatility_30d"].mean()
-turbulent_regime = mean_vol_by_state.idxmax()
-rolig_regime = mean_vol_by_state.idxmin()
+# --- Beregner gjennomsnittlig volatilitet og avkastning for å identifisere tilstander ---
+mean_vol_by_state = X_out.groupby("State")["realized_volatility_30d"].mean()
+mean_ret_by_state = X_out.groupby("State")["log_return"].mean()
+
+volatile_state = mean_vol_by_state.idxmax()
+calm_state = mean_vol_by_state.idxmin()
 
 # --- Egendefinert funksjon for å oppfylle oppgavekrav---
-def expected_duration(p_stay): #Returnerer forventet varighet gitt sannsynlighet for å forbli i samme regime.
+def expected_duration(p_stay):  # Returnerer forventet varighet gitt sannsynlighet for å forbli i samme regime.
     return 1 / (1 - p_stay)
 
 # --- Identifiserte regimer for varighet og overgang ---
-p_turb = P[turbulent_regime, turbulent_regime]
-p_rolig = P[rolig_regime, rolig_regime]
+p_volatile = P[volatile_state, volatile_state]
+p_calm = P[calm_state, calm_state]
 
-dur_turbulent = expected_duration(p_turb)
-dur_rolig = expected_duration(p_rolig)
+dur_volatile = expected_duration(p_volatile)
+dur_calm = expected_duration(p_calm)
 
-exit_turbulent = 1 - p_turb
-exit_rolig = 1 - p_rolig
+exit_volatile = 1 - p_volatile
+exit_calm = 1 - p_calm
+
+# --- Beregner nåværende regime og hvor lenge vi har vært i det ---
+current_state = states[-1]  # siste observerte regime
+current_streak = 0
+for state in reversed(states):
+    if state == current_state:
+        current_streak += 1
+    else:
+        break
+
+# --- Graf: Standardisert kursutvikling og state ---
+if show_main_plot:
+    plt.figure(figsize=(12, 6))
+    plt.plot(df.loc[X_out.index, "rebased_close"], color='black', linewidth=1, label="Markedsbevegelse")
+
+    plt.scatter(X_out.index[X_out["State"] == volatile_state],
+                df.loc[X_out.index[X_out["State"] == volatile_state], "rebased_close"],
+                color='red', s=10, label=f"State {volatile_state} (turbulent)")
+
+    plt.scatter(X_out.index[X_out["State"] == calm_state],
+                df.loc[X_out.index[X_out["State"] == calm_state], "rebased_close"],
+                color='green', s=10, label=f"State {calm_state} (rolig)")
+
+    plt.title("OSEBX med HMM-tilstander (ukentlig data)")
+    plt.xlabel("Dato")
+    plt.ylabel("Standardisert sluttkurs")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+# --- Graf: Volatilitetens støy ---
+if show_noise_plot:
+    plt.figure(figsize=(12, 6))
+    plt.axhline(0, color='black', linewidth=1)  # horisontal linje ved 0 (0 % avkastning)
+
+    returns = X_out["log_return"]
+    volatility = X_out["realized_volatility_30d"]
+
+    volatility = (volatility - volatility.mean()) / volatility.std() * returns.std()  # standardiserer volatiliteten rundt sitt gjennomsnitt og skalerer til samme startverdi som avkastningen
+
+    for i in range(1, len(X_out)):
+        x0, x1 = X_out.index[i - 1], X_out.index[i]
+        color = "red" if X_out["State"].iloc[i] == volatile_state else "green"
+        plt.axvspan(x0, x1, color=color, alpha=0.14, zorder=0)
+
+    plt.plot(X_out.index, returns, color='blue', linewidth=0.6, label="Avkastning")
+    plt.plot(X_out.index, volatility, color='orange', linewidth=0.6, label="Volatilitet")
+
+    plt.axhline(0, color='gray', linestyle='--', linewidth=0.8)
+
+    plt.title("OSEBX Avkastning og Volatilitet over tid")
+    plt.xlabel("Dato")
+    plt.ylabel("Avkastning (%)")
+    ax2 = plt.gca().secondary_yaxis('right', functions=(lambda x: x + X_out['realized_volatility_30d'].mean(), lambda x: x - X_out['realized_volatility_30d'].mean())) # høyre y-akse der 0-linjen treffer samsvarer med gjennomsnittlig volatilitet                                               
+    ax2.set_ylabel(f"Volatilitet (30d) – gj.snitt: {X_out['realized_volatility_30d'].mean():.3f}") # etikett for høyre y-akse
+
+
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
 
 # --- Terminalmeldinger ---
-print(" ") # (legger luft øverst i terminalen)
-print("Skjult Markov Modell – Strukturell regimeanalyse (OSEBX)")
+print(" ")  # luft i terminalen
+print("Skjult Markov Modell – Strukturell regimeeanalyse (OSEBX)")
+print("(Basert på ukentlig data)\n")
 
-if dur_turbulent > dur_rolig: # if-else løkke for å tilfredsstille oppgavekrav. 
-    print("Turbulent regime varer i snitt lenger enn rolig regime.")
-else:
-    print("Rolig regime varer i snitt lenger enn turbulent regime.")
-
-print("(Basert på ukentlig data)\n")  
 print("Overgangsmatrise (sannsynlighet for å forbli eller skifte):\n")
-print(pd.DataFrame(P, columns=["→Regime0", "→Regime1"], index=["Regime0→", "Regime1→"]))
-print("\nForventet varighet (UKER):")  
-print(f"• Rolig regime (Regime: {rolig_regime}): {dur_rolig:.2f} uker")
-print(f"• Turbulent regime (Regime: {turbulent_regime}): {dur_turbulent:.2f} uker")
-print("\nSannsynlighet for regimeskifte:")  
-print(f"• Fra rolig → turbulent: {exit_rolig:.4f}")
-print(f"• Fra turbulent → rolig: {exit_turbulent:.4f}")
-print("\nIdentifiserte regimer basert på gjennomsnittlig volatilitet:")
-print(f"• Rolig regime-ID: {rolig_regime}")
-print(f"• Turbulent regime-ID: {turbulent_regime}")
+print(pd.DataFrame(P, columns=["→ Regime 0", "→ Regime 1"], index=["Regime 0→", "Regime 1→"]))
+
+print("\nForventet varighet (UKER):")
+print(f"• Rolig regime (Regime: {calm_state}): {dur_calm:.2f} uker")
+print(f"• Turbulent regime (Regime: {volatile_state}): {dur_volatile:.2f} uker")
+
+print("\nSannsynlighet for regime-skifte:")
+print(f"• Fra rolig → turbulent: {exit_calm:.4f}")
+print(f"• Fra turbulent → rolig: {exit_volatile:.4f}")
+
+print("\nGjennomsnittlig avkastning pr. regime:")
+for state_id, ret in mean_ret_by_state.items():
+    print(f"Regime {state_id}: Gjennomsnittlig avkastning = {ret:.4f}")
+
 print("\nGjennomsnittlig volatilitet pr. regime:")
+for state_id, vol in mean_vol_by_state.items():
+    print(f"Regime {state_id}: Gjennomsnittlig volatilitet = {vol:.4f}")
 
-for regime_id, vol in mean_vol_by_state.items(): # for eller while løkke for å tilfredsstille oppgavekrav.
-    print(f"Regime {regime_id}: Gjennomsnittlig volatilitet = {vol:.4f}")
-
-# --- Plot: Close-kurs og regimer ---
-plt.figure(figsize=(12, 6))
-plt.plot(df.loc[X_out.index, "rebased_close"], color='black', linewidth=1, label="Markedsbevegelse")
-
-plt.scatter(X_out.index[X_out["Regime"] == turbulent_regime],
-            df.loc[X_out.index[X_out["Regime"] == turbulent_regime], "rebased_close"],
-            color='red', s=10, label=f"Regime {turbulent_regime} (turbulent)")
-
-plt.scatter(X_out.index[X_out["Regime"] == rolig_regime],
-            df.loc[X_out.index[X_out["Regime"] == rolig_regime], "rebased_close"],
-            color='green', s=10, label=f"Regime {rolig_regime} (rolig)")
-
-plt.title("OSEBX med HMM-regimer (ukentlig data)") 
-plt.xlabel("Dato")
-plt.ylabel("Standardisert Close-kurs")
-plt.legend()
-plt.tight_layout()
-plt.show()
+print("\nNåværende markedsregime:")
+print(f"• Identifisert regime: {current_state}")
+print(f"• Antall uker i nåværende regime: {current_streak}")
+print(" ")  # luft i terminalen 
