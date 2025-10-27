@@ -172,7 +172,7 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 
 ---
 
-## August 2025: Nåværende tilstand
+## Oktober 2025: Nåværende tilstand
 
 - **Identifisert regime:** Regime 1 (rolig)  
 - **Varighet:** omtrent 43 uker i gjennomsnitt  
