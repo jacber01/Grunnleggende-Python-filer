@@ -121,7 +121,7 @@ Den identifiserer tilstander som “Regime 0” og “Regime 1”, uten å vite 
 **Eksempeloutput:**  
 > “Basert på dagens data er det 87 % sannsynlig at markedet forblir i Regime 1.”
 
-Vi tolker deretter hva Regime 1 betyr, gjennom å se om gjennomsnittsvolatiliteten er høyere eller lavere enn Regime 0.
+Vi tolker deretter hva Regime 1 betyr, ved å se om gjennomsnittsvolatiliteten er høyere eller lavere enn Regime 0.
 
 ---
 
