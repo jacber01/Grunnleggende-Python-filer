@@ -143,7 +143,7 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 **Eksempel:**
 - Modellen sier “87 % sjanse for Regime 1”  
 - Vi vet Regime 1 historisk tilsvarer høy volatilitet og lav avkastning  
-- **Tiltak:** Reduser aksjeeksponering fra 100 % til 60 %, øk kontantandel, sett tettere stop-loss  
+- **Tiltak:** Stop all ny aksjeeksponering, hold det heller som kontantandel intil modellen sier at regime 1 er over.  
 
 ---
 
@@ -167,17 +167,17 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 
 |               | → Regime 0 | → Regime 1 |
 |---------------|------------|------------|
-| **Fra Regime 0** | 85,8 % | 14,2 % |
-| **Fra Regime 1** | 2,3 % | 97,7 % |
+| **Fra Regime 0** | 97.6 % | 2.4 % |
+| **Fra Regime 1** | 13.5 % | 86.5 % |
 
 ---
 
 ## Oktober 2025: Nåværende tilstand
 
-- **Identifisert regime:** Regime 1 (rolig)  
-- **Varighet:** omtrent 43 uker i gjennomsnitt  
+- **Identifisert regime:** Regime 0 (rolig)  
+- **Varighet:** omtrent 41 uker i gjennomsnitt  
 - **Overgangssannsynlighet:** 2,3 % sjanse for overgang til et turbulent regime  
-- **Anbefaling:** Basert på modellen kan en investor vurdere å fortsette å holde en betydelig andel aktiva i porteføljen sin, framfor et risikofritt alternativ. Vi er i et rolig regime med sterk sannsynlighet for å bli her i de nærmeste ukene framover.  
+- **Anbefaling:** Basert på modellen kan en investor fortsette å holde en betydelig andel aktiva i porteføljen sin, framfor et risikofritt alternativ. Vi er i et rolig regime med sterk sannsynlighet for å bli her i de nærmeste ukene framover.  
 
 ---
 
