@@ -94,7 +94,7 @@ if show_plot:
     plt.plot(X_out.index, returns, color="blue", linewidth=0.6, label="Avkastning")
     plt.plot(X_out.index, volatility, color="orange", linewidth=0.6, label="Volatilitet")
     plt.axhline(0, color="gray", linestyle="--", linewidth=0.8)
-    plt.title("OSEBX Avkastning og Volatilitet over tid")
+    plt.title("Ukentlig OSEBX Avkastning og Volatilitet over tid")
     plt.xlabel("Dato")
     plt.ylabel("Avkastning (%)")
     ax2 = plt.gca().secondary_yaxis("right", functions=(lambda x: x + X_out["realized_volatility_30d"].mean(), lambda x: x - X_out["realized_volatility_30d"].mean())) # høyre y-akse der 0-linjen samsvarer med gjennomsnittlig volatilitet                                               
