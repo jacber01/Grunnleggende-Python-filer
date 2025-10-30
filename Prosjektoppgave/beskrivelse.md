@@ -32,7 +32,7 @@ Etter å ha observert restauranten over tid kan vi konstruere en overgangsmatris
 ### Hvordan modellen faktisk “ser” bevegelsene
 
 En vanlig misforståelse er at Markov-modellen “følger regimene” fra sted til sted i sanntid. Det gjør den ikke. Modellen ser kun tilstandene som punktvise observasjoner over tid.  
-Med andre ord: den ser at det var Pizza i dag, og bruker kun det for å estimere sannsynligheten for hva lunsjtilbudet blir neste gang én av disse definerte regimene oppnås. Den bryr seg ikke om eventuelle mellomstopp, eller i dette tilfellet, andre tilbud underveis.
+Med andre ord: den ser at det var Pizza i dag, og bruker kun det for å estimere sannsynligheten for hva lunsjtilbudet blir neste gang én av disse definerte regimene oppstår. Den bryr seg ikke om eventuelle mellomstopp, eller i dette tilfellet, andre tilbud underveis.
 
 Hver dag er altså ett *tidssteg* der restauranten befinner seg i én av tre mulige tilstander. Neste dag velges en ny tilstand basert på overgangssannsynlighetene i tabellen over.  
 Dette kalles en **diskret Markov-prosess**.
