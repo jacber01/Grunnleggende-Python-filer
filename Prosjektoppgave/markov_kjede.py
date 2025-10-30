@@ -98,7 +98,7 @@ if show_plot:
     plt.xlabel("Dato")
     plt.ylabel("Avkastning (%)")
     ax2 = plt.gca().secondary_yaxis("right", functions=(lambda x: x + X_out["realized_volatility_30d"].mean(), lambda x: x - X_out["realized_volatility_30d"].mean())) # høyre y-akse der 0-linjen samsvarer med gjennomsnittlig volatilitet                                               
-    ax2.set_ylabel(f"Volatilitet (30d) – gj.snitt: {X_out['realized_volatility_30d'].mean():.3f}")  # etikett for høyre y-akse
+    ax2.set_ylabel(f"Volatilitet (30d) – gj.snitt(%): {X_out['realized_volatility_30d'].mean():.3f}")  # navn for høyre y-akse
     plt.legend()
     plt.tight_layout()
     plt.show()
