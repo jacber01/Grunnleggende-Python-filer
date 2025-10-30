@@ -105,8 +105,8 @@ if show_plot:
 
 # --- Terminalmeldinger ---
 print(" ")  # luft i terminalen
-print("Skjult Markov Modell – Strukurell regimeanalyse (OSEBX)")
-print("(Basert på ukentlig data)\n")n
+print("Skjult Markov Modell – Strukturell regimeanalyse (OSEBX)")
+print("(Basert på ukentligdata)\n")n
 print("Overgangsmatrise (sannsynlighet for å forbli eller skifte):\n")
 print(pd.DataFrame(P, columns=["→ Regime 0", "→ Regime 1"], index=["Regime 0→", "Regime 1→"]))
 
