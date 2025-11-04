@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore")
 
 # --- Konfig ---
-show_plot = True  # om Grafen skal vises
+show_plot = True  # om grafen skal vises
 
 # --- Leser inn data fra CSV-filen ---
 base = os.path.dirname(os.path.abspath(__file__))  # finner mappen der python filen ligger
@@ -26,7 +26,7 @@ X_df = df[obs_cols].replace([np.inf, -np.inf], np.nan).dropna()  # fjerner rader
 
 # --- Standardiserer dataene ---
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X_df.values)
+X_scaled = scaler.fit_transform(X_df.values) # standardiserer dataene for å passe på at ingen variabler dominerer på grunn av skala
 
 # --- Trener HMM-modellen ---
 model = GaussianHMM(
@@ -39,7 +39,7 @@ model = GaussianHMM(
 model.fit(X_scaled)
 
 # --- Fast overgangsmatrise ---
-P = model.transmat_
+P = model.transmat_ 
 
 # --- Predikerer skjulte tilstander ---
 states = model.predict(X_scaled)
@@ -53,16 +53,12 @@ mean_ret_by_state = X_out.groupby("State")["log_return"].mean()
 volatile_state = mean_vol_by_state.idxmax()
 calm_state = mean_vol_by_state.idxmin()
 
-# --- Egendefinert funksjon for å oppfylle oppgavekrav---
-def expected_duration(p_stay):  # Returnerer forventet varighet gitt sannsynlighet for å forbli i samme regime.
-    return 1 / (1 - p_stay)
-
 # --- Identifiserte regimer for varighet og overgang ---
-p_volatile = P[volatile_state, volatile_state]
+p_volatile = P[volatile_state, volatile_state] 
 p_calm = P[calm_state, calm_state] 
 
-dur_volatile = expected_duration(p_volatile)
-dur_calm = expected_duration(p_calm)
+dur_volatile = 1 / (1 - p_volatile)
+dur_calm = 1 / (1 - p_calm) 
 
 exit_volatile = 1 - p_volatile
 exit_calm = 1 - p_calm
@@ -98,15 +94,16 @@ if show_plot:
     plt.xlabel("Dato")
     plt.ylabel("Avkastning (%)")
     ax2 = plt.gca().secondary_yaxis("right", functions=(lambda x: x + X_out["realized_volatility_30d"].mean(), lambda x: x - X_out["realized_volatility_30d"].mean())) # høyre y-akse der 0-linjen samsvarer med gjennomsnittlig volatilitet                                               
-    ax2.set_ylabel(f"Volatilitet (30d) – gj.snitt(%): {X_out['realized_volatility_30d'].mean():.3f}")  # navn for høyre y-akse
+    ax2.set_ylabel(f"Volatilitet (30d) annualisert gj.snitt: {X_out['realized_volatility_30d'].mean():.3f}")  # skrift for høyre y-akse
     plt.legend()
     plt.tight_layout()
     plt.show()
 
 # --- Terminalmeldinger ---
 print(" ")  # luft i terminalen
-print("Skjult Markov Modell – Strukturell regimeanalyse (OSEBX)")
-print("(Basert på ukentligdata)\n")n
+print("Strukturell regimeeanalyse med en Skjult Markov-modell på (OSEBX)")
+print("(Basert på ukentlig data)\n")
+
 print("Overgangsmatrise (sannsynlighet for å forbli eller skifte):\n")
 print(pd.DataFrame(P, columns=["→ Regime 0", "→ Regime 1"], index=["Regime 0→", "Regime 1→"]))
 
