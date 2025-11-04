@@ -106,12 +106,12 @@ Den identifiserer tilstander som “Regime 0” og “Regime 1”, uten å vite 
 **Observerbare signaler:** Avkastning, volatilitet, volum, HL-spread  
 
 **Hvordan det fungerer:**
-1. Vi observerer dagens markedsdata (f.eks. −2 % avkastning, høy volatilitet, høyt volum).  
+1. Vi observerer dagens markedsdata (f.eks. lav avkastning, høy volatilitet, høyt volum).  
 2. Modellen bruker Baum–Welch-algoritmen til å estimere hvilke regimer som best forklarer observasjonene.  
 3. Den gir deretter informasjon om hvilket regime vi befinner oss i akkurat nå, samt matrisen over hvor sannsynlig det er å forbli der.
 
 **Eksempeloutput:**  
-> “Vi er i Regime 1. Vi har vært der i 10 uker og det er 90% sannsynlighet for at Regime 1 forblir i Regime 1.”
+> “Vi er i Regime 1. Vi har vært der i 10 uker og det er 90% sannsynlighet for at Regime 1 forblir i Regime 1 til neste uke.”
 
 Vi tolker deretter hva Regime 1 betyr, ved å se om gjennomsnittsvolatiliteten er høyere eller lavere enn Regime 0.
 
