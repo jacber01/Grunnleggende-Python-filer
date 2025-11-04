@@ -1,13 +1,13 @@
 # Regimeidentifikasjon på Oslo Børs med Skjult Markov-modell (HMM)
 
-Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underliggende markedsregimer på Oslo Børs. Modellen analyserer historiske data og avdekker skjulte regimer som kan brukes til risikostyring og porteføljetilpasning.
+Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underliggende markedsregimer på Oslo Børs. Modellen analyserer historisk data fra OSEBX og avdekker skjulte regimer som kan brukes til risikostyring og porteføljetilpasning.
 
 ## Prosjektmål
 
 Koden kan brukes til å svare på spørsmålet: *Hvor eksponert bør en investor være i Oslo Børs akkurat nå?*
 
 Modellen:
-- Henter og analyserer data fra OSEBX-indeksen fra og med 3 år tilbake til seneste handelsdag
+- Henter og analyserer data fra desember 2022 t.o.m Oktober 2025.
 - Identifiserer automatisk to distinkte markedsregimer basert på fire forskjellige variabler (Volum, Volatilitet, Avkastning og High/low-spredning)
 - Gir sannsynlighetsbaserte prediksjoner om fremtidige regimeskift
 
@@ -59,21 +59,23 @@ $\pi_{t+1} = \pi_t \cdot P$
 Resultatet blir:  
 $\pi_{t+1} = [0.60,\ 0.10,\ 0.30]$
 
-Dette betyr at hvis restauranten hadde Pizza i dag, er det 60 % sjanse for at det blir Burger i morgen, 10 % for Pizza igjen, og 30 % for Taco.
+Dette betyr at hvis restauranten hadde Pizza i dag, er det 60 % sjanse for at det blir Burger i morgen, 10 % for Pizza igjen, og 30 % for Taco. 
+
+Merk: Det betyr ikke at vi som analytikere nødvendigvis alltid velger å estimere med den høyeste prosentsatsen. Det betyr at over en lang periode vil fordelingen av lunsjtilbudene konvergere mot satsene i matrisen som modellen allerede har observert.
 
 ---
 
 ### Anvendelse på aksjemarkedet
 
-I den finansielle verden vil “tilstandene” i modellen oversettes til markedsregimer:
+I denne modellen vil “tilstandene” til markedsregimer:
 - **Regime 0**
 - **Regime 1**
 
-Der regime med lavest gjennomsnittsvolatilitet klassifiseres som "rolig" og det med høyest volatilitet klassifiseres som "turbulent".
+Det regime med lavest gjennomsnittsvolatilitet klassifiseres som "rolig" og det med høyest volatilitet klassifiseres som "turbulent".
 
 En vanlig Markov-modell antar at regime kan observeres direkte. Vi kan da beregne sannsynligheten for overgang fra ett regime til et annet basert på observasjoner av dagens regime.
 
-**Problemet:** I virkeligheten vet vi ikke hvilket regime markedet er i. Vi kan kun observere handlinger som er påvirket av regime (er volatiliteten stor, er volumet stort osv.). Regimene er nemlig skjulte. Dette løses med en Skjult Markov-modell.
+**Problemet:** I virkeligheten vet vi ikke hvilket regime markedet er i. Vi kan kun observere underliggende handlinger (er volatiliteten stor, er det mye salg, daglig avkastning osv.). Selve regimene er nemlig skjulte. Dette løses med en Skjult Markov-modell.
 
 ---
 
@@ -81,25 +83,25 @@ En vanlig Markov-modell antar at regime kan observeres direkte. Vi kan da beregn
 
 ### Intuitivt eksempel
 
-Du prøver å finne ut om vennen din har en god dag eller dårlig dag, men du kan ikke spørre direkte. I stedet observerer du:
-- Snakker mye/lite  
-- Smiler/ikke smiler  
-- Spiser normalt/hopper over måltider  
+La oss si at vi prøver å finne ut om stemningen på en arbeidsplass er god eller dårlig. Vi kan ikke spørre alle ansatte direkte så i stedet observerer vi om det:
+- Snakkes mye/lite  
+- Smiles mye/lite  
+- Spises normalt/hoppes over måltider  
 
-Du kan ikke observere den “skjulte” tilstanden (god/dårlig dag), men du kan se symptomene.  
-Over tid lærer modellen sammenhengen mellom de skjulte tilstandene og de observerte signalene.
+Vi kan ikke observere den “skjulte” tilstanden (god/dårlig steming), men vi kan se symptomene. 
+
+Med nok data lærer modellen sammenhengen mellom de skjulte tilstandene og de observerte signalene.
 
 ---
 
 ### To lag i en HMM
 
-1. **Skjulte tilstander** – det vi ikke ser direkte (markedsregimer, humør)  
-2. **Observerbare signaler** – det vi faktisk måler (avkastning, volum, volatilitet, atferd)
+1. **Skjulte tilstander** – det vi ikke ser direkte (markedsregimer, stemning på jobben)  
+2. **Observerbare signaler** – det vi faktisk måler (avkastning, volatilitet, atferd)
 
-Modellen lærer tre typer sannsynligheter:
-1. **Start-sannsynligheter** – hvor vi trolig starter  
-2. **Overgangssannsynligheter** – hvordan vi flytter mellom tilstander  
-3. **Emisjons-sannsynligheter** – hvor sannsynlig en observasjon er gitt en tilstand  
+Modellen lærer to typer sannsynligheter:
+1. **Start-regime** – hvilket regime vi var i sist  
+2. **Overgangssannsynligheter** – hvordan vi flytter mellom regimer (i form av en matrise)    
 
 Den identifiserer tilstander som “Regime 0” og “Regime 1”, uten å vite hva de betyr. Det er vi som må tolke regimene ved å se på dataene:
 - Gjennomsnittlig volatilitet i hver tilstand  
@@ -115,21 +117,21 @@ Den identifiserer tilstander som “Regime 0” og “Regime 1”, uten å vite 
 
 **Hvordan det fungerer:**
 1. Vi observerer dagens markedsdata (f.eks. −2 % avkastning, høy volatilitet, høyt volum).  
-2. Modellen bruker **Baum–Welch-algoritmen** til å estimere hvilke regimer som best forklarer observasjonene.  
-3. Den gir deretter sannsynligheten for at vi befinner oss i hvert regime akkurat nå.
+2. Modellen bruker Baum–Welch-algoritmen til å estimere hvilke regimer som best forklarer observasjonene.  
+3. Den gir deretter informasjon om hvilket regime vi befinner oss i akkurat nå, samt matrisen over hvor sannsynlig det er å forbli der.
 
 **Eksempeloutput:**  
-> “Basert på dagens data er det 87 % sannsynlig at markedet forblir i Regime 1.”
+> “Vi er i Regime 1. Vi har vært der i 10 uker og det er 90% sannsynlighet for at Regime 1 forblir i Regime 1.”
 
 Vi tolker deretter hva Regime 1 betyr, ved å se om gjennomsnittsvolatiliteten er høyere eller lavere enn Regime 0.
 
 ---
 
-### Algoritmer (forenklet)
+### Algoritmer (svært avansert - forenklet forklaring)
 
-- **Viterbi-algoritmen**: finner den mest sannsynlige sekvensen av skjulte tilstander over tid  
-- **Forward–Backward-algoritmen**: beregner sannsynligheten for hver tilstand på hvert tidspunkt  
-- **Baum–Welch-algoritmen**: justerer modellparametrene iterativt slik at modellen best passer observasjonene (variant av EM-algoritmen)
+- **Viterbi-algoritmen**: Finner den mest sannsynlige sekvensen av skjulte tilstander over tid.  
+- **Forward–Backward-algoritmen**: Beregner sannsynligheten for hver tilstand på hvert tidspunkt.  
+- **Baum–Welch-algoritmen**: Justerer modellparametrene med 500 iterasjoner slik at modellen best passer observasjonene.
 
 ---
 
@@ -143,7 +145,7 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 **Eksempel:**
 - Modellen sier “87 % sjanse for Regime 1”  
 - Vi vet Regime 1 historisk tilsvarer høy volatilitet og lav avkastning  
-- **Tiltak:** Stop all ny aksjeeksponering, hold det heller som kontantandel intil modellen sier at regime 1 er over.  
+- **Tiltak:** Ikke øk aksjeeksponeringen, hold heller kontanter intil modellen sier at regime 1 er over.  
 
 ---
 
@@ -152,16 +154,16 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 ### Identifiserte regimer
 
 **Regime 0:**  
-- Gjennomsnittlig volatilitet: 19 %  
-- Klassifikasjon: Turbulent markedsregime  
-- Gjennomsnittlig varighet: 7 uker  
-- Historiske hendelser der Regime 0 ble observert: Silicon Valley Bank og Credit Suisse-kollapsene (apr. 2023), oljeprisen korrigerte kraftig ned fra sommerens høyder i sept. 2024, Trump-tariffkrisen og handelskrigen mellom USA og Kina (apr. 2025)
+- Gjennomsnittlig volatilitet: 11,52 %  
+- Klassifikasjon: Rolig markedsregime  
+- Gjennomsnittlig varighet: ~40 uker  
+- Historiske hendelser der Regime 0 ble observert: Perioder med jevn oppgang og lav volatilitet, typisk juni 2023 til sommeren 2024
 
 **Regime 1:**  
-- Gjennomsnittlig volatilitet: 11 %  
-- Klassifikasjon: Rolig markedsregime  
-- Gjennomsnittlig varighet: 42 uker  
-- Historiske hendelser der Regime 1 ble observert: Perioder med jevn oppgang og lav volatilitet, typisk juni 2023 til sommeren 2024
+- Gjennomsnittlig volatilitet: 19,24 %  
+- Klassifikasjon: Turbulent markedsregime  
+- Gjennomsnittlig varighet: ~7 uker  
+- Historiske hendelser der Regime 1 ble observert: Silicon Valley Bank og Credit Suisse-kollapsene (apr. 2023), Trump-tariffkrisen og handelskrigen mellom USA og Kina (apr. 2025)
 
 **Overgangssannsynligheter:**
 
@@ -177,22 +179,20 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 - **Identifisert regime:** Regime 0 (rolig)  
 - **Varighet:** omtrent 41 uker i gjennomsnitt  
 - **Overgangssannsynlighet:** 2,3 % sjanse for overgang til et turbulent regime  
-- **Anbefaling:** Basert på modellen kan en investor fortsette å holde en betydelig andel aktiva i porteføljen sin, framfor et risikofritt alternativ. Vi er i et rolig regime med sterk sannsynlighet for å bli her i de nærmeste ukene framover.  
+- **Anbefaling:** Basert på modellen kan en investor fortsette å holde en betydelig andel aktiva i porteføljen sin. Vi er i et rolig regime med sterk sannsynlighet for å bli her i de nærmeste ukene framover.  
 
 ---
 
 ## Konklusjon
 
 **Styrker:**
-- Objektiv regimeidentifikasjon via Baum–Welch  
-- Probabilistisk rammeverk (ikke binært)  
-- Multivariat robusthet (flere datakilder)  
-- Kan varsle regimeskift tidlig  
+- Objektiv regimeidentifikasjon
+- Kan håndtere flere datakilder samtidig    
+- Viser hvor stabilt markedet er, og hvor lenge turbulente faser normalt varer   
 
 **Begrensninger:**
 - Antall regimer må defineres på forhånd  
-- Markov-egenskapen kan være for enkel  
-- Krever periodisk re-estimering  
+- Markov-egenskapen kan være for enkel for et så avansert felt som aksjemarkedet   
 
 **Mulige utvidelser:**
 - Flere enn to regimer  
@@ -234,12 +234,12 @@ ${HL} {Spread} = \frac{High - Low}{Close} \times 100$
 
 
 *Ekstra*  
-Hvis du vil hente ut og teste modellen på de nyeste dataene for Oslo Børs, gjør følgende:  
+Hvis du vil hente ut og teste modellen på oppdatert data for Oslo Børs, gjør følgende:  
 
 1. Kjør `data_eksport.py`  
-2. Pass på at den nye, oppdaterte CSV-filen ligger i samme mappe som `markov_kjede.py`, og kjør den på nytt  
+2. Pass på at den nye, oppdaterte CSV-filen ligger i samme mappe som `markov_kjede.py`, og kjør denne på nytt  
 
-Dette kan føre til andre resultater fordi modellen trenes på nytt med oppdatert data.
+Dette kan føre til andre resultater enn det jeg fikk fordi modellen trenes på nytt med ny data.
 
 ---
 
