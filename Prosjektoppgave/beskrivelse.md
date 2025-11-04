@@ -57,7 +57,7 @@ Merk: Det betyr ikke at vi som analytikere nødvendigvis alltid velger å estime
 
 ### Anvendelse på aksjemarkedet
 
-I denne modellen vil “tilstandene” til markedsregimer:
+I denne modellen vil “tilstandene” være markedsregimer. Disse er klassifisert som:
 - **Regime 0**
 - **Regime 1**
 
