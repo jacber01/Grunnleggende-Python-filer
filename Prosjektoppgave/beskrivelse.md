@@ -63,7 +63,7 @@ I denne modellen vil “tilstandene” være markedsregimer. Disse er klassifise
 
 Det regime med lavest gjennomsnittsvolatilitet klassifiseres som "rolig" og det med høyest volatilitet klassifiseres som "turbulent".
 
-En vanlig Markov-modell antar at regime kan observeres direkte. Vi kan da beregne sannsynligheten for overgang fra ett regime til et annet basert på observasjoner av dagens regime.
+En vanlig Markov-modell antar at vi kan observere regime direkte. Vi kan da beregne sannsynligheten for overgang fra ett regime til et annet basert på observasjoner av dagens regime.
 
 **Problemet:** I virkeligheten vet vi ikke hvilket regime markedet er i. Vi kan kun observere underliggende handlinger (er volatiliteten stor, er det mye salg, daglig avkastning osv.). Selve regimene er nemlig skjulte. Dette løses med en Skjult Markov-modell.
 
