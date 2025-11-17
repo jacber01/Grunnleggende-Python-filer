@@ -17,7 +17,7 @@ Modellen:
 
 ### Intuitivt eksempel
 
-La oss si at en restaurant har et daglig lunsjtilbud som består av **enten** Pizza, Burger eller Taco. Og at du ønsker å finne mønsteret mellom disse tre tilbudene (også kalt "regimene"). Hovedantakelsen i en Markov-modell er at sannsynligheten for hva morgendagens lunsjtilbud blir, kun er avhengig av hva lunsjtilbudet var i dag. Dette uttrykkes matematisk som:
+La oss si at en restaurant har et daglig lunsjtilbud som består av **enten** Pizza, Burger eller Taco. Og at vi ønsker å finne mønsteret mellom disse tre tilbudene (også kalt "regimene"). Hovedantakelsen i en Markov-modell er at sannsynligheten for hva morgendagens lunsjtilbud blir, kun er avhengig av hva lunsjtilbudet var i dag. Dette uttrykkes matematisk som:
 
 $P(X_{t+1} \mid X_t)$
 
@@ -36,7 +36,7 @@ Da representeres dagens tilstandsvektor slik:
 
 $\pi_t = [P(\text{Burger})=0, P(\text{Pizza})=1, P(\text{Taco})=0]$
 
-Overgangsmatrisen $P$ definerer hvordan du kan gå til neste dag:
+Overgangsmatrisen $P$ definerer hvordan vi kan gå til neste dag:
 
 Fra Pizza → Burger: 60%  
 Fra Pizza → Pizza: 10%  
