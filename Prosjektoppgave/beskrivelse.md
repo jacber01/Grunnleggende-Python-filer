@@ -61,7 +61,7 @@ I denne modellen vil “tilstandene” være markedsregimer. Disse er klassifise
 - **Regime 0**
 - **Regime 1**
 
-Det regime med lavest gjennomsnittsvolatilitet klassifiseres som "rolig" og det med høyest volatilitet klassifiseres som "turbulent".
+Modellen får beskjed om å finne 2 regimer basert på dataen som er gitt og det regime med lavest gjennomsnittsvolatilitet klassifiserer vi som "rolig" og det med høyest volatilitet klassifiserer vi som "turbulent".
 
 En vanlig Markov-modell antar at vi kan observere regime direkte. Vi kan da beregne sannsynligheten for overgang fra ett regime til et annet basert på observasjoner av dagens regime.
 
