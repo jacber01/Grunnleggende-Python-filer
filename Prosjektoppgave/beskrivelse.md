@@ -196,8 +196,7 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 
 #### 1. Daglig avkastning (den uken)
 $r_t = \ln\left(\frac{Close_t}{Close_{t-1}}\right)$  
-- Fanger retning og endringstakt  
-- Brukes som hovedsignal i regimeanalysen  
+- Fanger retning og endringstakt   
 
 #### 2. Volum (handelsvolum)
 - Måler markedsaktivitet  
