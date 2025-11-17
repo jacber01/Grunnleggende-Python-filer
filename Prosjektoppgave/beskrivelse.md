@@ -194,24 +194,20 @@ Etter at modellen er trent og regimene tolket, kan vi bruke den slik:
 
 ### Variabler brukt i modellen
 
-#### 1. Close Price (sluttkurs)
-- Beregner log-avkastning  
-- Indikerer trend og momentum  
-
-#### 2. Daglig avkastning
+#### 1. Daglig avkastning (den uken)
 $r_t = \ln\left(\frac{Close_t}{Close_{t-1}}\right)$  
 - Fanger retning og endringstakt  
 - Brukes som hovedsignal i regimeanalysen  
 
-#### 3. Volum (handelsvolum)
+#### 2. Volum (handelsvolum)
 - Måler markedsaktivitet  
 - Normaliseres via z-score  
 
-#### 4. Realisert Volatilitet (30 dager)
+#### 3. Realisert Volatilitet (30 dager)
 $\sigma_{30d} = \text{std}(r_{t-30:t}) \times \sqrt{252}$  
 - Hovedindikator for markedsrisiko  
 
-#### 5. High–Low Spread
+#### 4. High–Low Spread
 ${HL} {Spread} = \frac{High - Low}{Close} \times 100$  
 - Fanger intradag-spredning i prosent  
 
