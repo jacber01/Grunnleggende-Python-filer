@@ -7,7 +7,7 @@ Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underlig
 Koden kan brukes til å analyse om Oslo Børs har vært et stabilt marked de siste 3 årene, derav kan koden hjelpe med å svaret på spørsmålet: *Er det trygt for en investor å være eksponert i Oslo Børs akkurat nå?*
 
 Modellen:
-- Henter og analyserer data fra OSEBX-indeksen i tidsrommet desember 2022 t.o.m Oktober 2025.
+- Henter og analyserer data fra OSEBX-indeksen i tidsrommet desember 2022 t.o.m oktober 2025.
 - Identifiserer automatisk to distinkte markedsregimer basert på fire forskjellige variabler (Volum, Volatilitet, Avkastning og High/low-spredning)
 - Gir sannsynlighetsbaserte prediksjoner om fremtidige regimeskift
 
