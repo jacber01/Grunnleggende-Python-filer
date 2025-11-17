@@ -1,6 +1,6 @@
 # Regimeidentifikasjon på Oslo Børs med Skjult Markov-modell (HMM)
 
-Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underliggende markedsregimer på Oslo Børs. Modellen analyserer historisk data fra OSEBX og avdekker skjulte regimer som kan brukes til risikostyring og porteføljetilpasning.
+Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underliggende markedsregimer på Oslo Børs. Modellen analyserer historisk data fra OSEBX-indeksen og avdekker skjulte regimer som kan brukes til risikostyring og porteføljetilpasning i praksis.
 
 ## Prosjektmål
 
