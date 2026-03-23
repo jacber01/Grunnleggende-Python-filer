@@ -3,6 +3,7 @@ Denne koden er laget med bakgrunn fra mitt masterprogram i finans. Koden skal br
 
 ## Filene som er i mappen
 Mappen består i hovedsak av fire filer.
+
 markov_kjede.py er kjernen i prosjektoppgaven; det er denne som kjører maskinlæringsmodellen og skriver ut resultatene som oppnås.
 
 data_eksport.py brukes til å beregne, vaske og generere datafilen som trengs for å kjøre markov_kjede.py.
@@ -22,4 +23,6 @@ markov_kjede.py inneholder de resterende kravene, som if/else-tester, while løk
 
 *For en dypere analyse og forklaring av koden, les Grundig beskrivelse.md
 
-*AI erklæring: Kunstlig intelligens (AI) er ikke brukt til å generere noe kode i denne oppgaven. AI er kun benyttet som et verktøy for å hjelpe med å forstå og forklare resultatene oppnådd fra koden.*
+## AI erklæring
+
+*Kunstlig intelligens (AI) er ikke brukt til å generere noe kode i denne oppgaven. AI er kun benyttet som et verktøy for å hjelpe med å forstå og forklare resultatene oppnådd fra koden.*
