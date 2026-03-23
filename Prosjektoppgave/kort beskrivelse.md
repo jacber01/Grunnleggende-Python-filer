@@ -18,6 +18,8 @@ Det som er interessant her, er at det fremkommer tydelige svingninger i både av
 ### Koden følger oppgave kravene teknisk. 
 Skriving av data til fil og vektoriserte beregninger er implementert i data_eksport.py, som beregner rullerende 30-dagers volatilitet, logaritmisk avkastning, høy-lav-spread og z-score for handelsvolum.
 
-markov_kjede.py inneholder de resterende kravene, som if/else-tester, while løkker, innlesing av data fra fil, plotting osv. 
+markov_kjede.py inneholder de resterende kravene, som if/else-tester, while løkker, innlesing av data fra fil, plotting osv.
+
+*For en dypere analyse og forklaring av koden, les Grundig beskrivelse.md
 
 *AI erklæring: Kunstlig intelligens (AI) er ikke brukt til å generere noe kode i denne oppgaven. AI er kun benyttet som et verktøy for å hjelpe med å forstå og forklare resultatene oppnådd fra koden.*
