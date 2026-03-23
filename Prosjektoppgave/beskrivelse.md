@@ -2,6 +2,8 @@
 
 Dette prosjektet bruker en **Skjult Markov-modell** til å identifisere underliggende markedsregimer på Oslo Børs. Modellen analyserer historisk data fra OSEBX-indeksen og avdekker skjulte regimer som kan brukes til risikostyring og porteføljetilpasning i praksis.
 
+*AI erklæring: Kunstlig intelligens (AI) er ikke brukt til å generere noe kode i denne oppgaven. AI er kun benyttet som et verktøy for å hjelpe med å forstå og forklare resultatene oppnådd fra koden.*
+
 ## Prosjektmål
 
 Koden kan brukes til å analyse om Oslo Børs har vært et stabilt marked de siste 3 årene, derav kan koden hjelpe med å svaret på spørsmålet: *Er det trygt for en investor å være eksponert i Oslo Børs akkurat nå?*
