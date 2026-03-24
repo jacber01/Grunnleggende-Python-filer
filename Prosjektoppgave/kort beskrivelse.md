@@ -1,5 +1,5 @@
 ## Problemet jeg ønsker å løse
-Denne koden er laget med bakgrunn fra mitt masterprogram i finans. Koden skal brukes som et verktøy for å analysere om aksjemarkedet er i en turbulent eller rolig fase (også kalt regime).
+Denne koden er laget med bakgrunn fra mitt masterprogram i finans. Koden skal brukes som et verktøy for å analysere om aksjemarkedet er i en turbulent eller rolig fase (også kalt regime) i dag, og hvordan det historisk har sett ut de siste 3 årene, basert på 4 forhåndsdefinerte- og utregnet variabler.
 
 ## Filene som er i mappen
 Mappen består i hovedsak av fire filer.
