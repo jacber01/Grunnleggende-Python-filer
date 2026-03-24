@@ -21,7 +21,7 @@ Skriving av data til fil og vektoriserte beregninger er implementert i data_eksp
 
 markov_kjede.py inneholder de resterende kravene, som if/else-tester, while løkker, innlesing av data fra fil, plotting osv.
 
-*For en dypere analyse og forklaring av koden, les Grundig beskrivelse.md*
+*For en dypere analyse og forklaring av modellen, les Grundig beskrivelse.md, for en dypere forklaring bak koden se kommentarene gitt i markov_kjede.py*
 
 ## AI erklæring
 
