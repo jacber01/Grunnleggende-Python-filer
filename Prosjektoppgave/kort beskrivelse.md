@@ -16,7 +16,7 @@ Plottet er farget grønt og rødt basert på når koden vurderer markedet som he
 
 Det som er interessant her, er at det fremkommer tydelige svingninger i både avkastning og volatilitet når markedet er i den røde (turbulente) fasen. Dette kan indikere at modellen har klassifisert tilstandene korrekt.
 
-### Koden følger oppgave kravene teknisk. 
+## Koden følger oppgave kravene teknisk. 
 Skriving av data til fil og vektoriserte beregninger er implementert i data_eksport.py, som beregner rullerende 30-dagers volatilitet, logaritmisk avkastning, høy-lav-spread og z-score for handelsvolum.
 
 markov_kjede.py inneholder de resterende kravene, som if/else-tester, while løkker, innlesing av data fra fil, plotting osv.
